@@ -18,7 +18,7 @@ The game in this example is based on [ValleyOfCubes_Unity3D](https://github.com/
 
 |                           **iOS**                           |                         **Android**                          |
 | :---------------------------------------------------------: | :----------------------------------------------------------: |
-| <img src="./iOS-gif.gif" alt="iOS-gif" style="zoom:50%;" /> | <img src="./Android-gif.gif" alt="Android-gif" style="zoom: 50%;" /> |
+| <img src="./iOS-gif.gif" alt="iOS-gif" style="zoom:30%;" /> | <img src="./Android-gif.gif" alt="Android-gif" style="zoom: 30%;" /> |
 
 
 

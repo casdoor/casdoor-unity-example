@@ -9,7 +9,7 @@ The game in this example is based on [ValleyOfCubes_Unity3D](https://github.com/
 - download the code
 
 ```bash
- git clone git@github.com:Wrapping-2000/casdoor-unity-example.git
+ git clone git@github.com:casdoor/casdoor-unity-example.git
 ```
 
 - Open the newly downloaded code in `Unity Hub` and run it.

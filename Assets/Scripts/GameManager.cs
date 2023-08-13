@@ -24,29 +24,29 @@ public class GameManager : MonoBehaviour
     bool gameOver;
     int currentLevel = 1;
 
-    //public TextMeshProUGUI userInfoText;
-    //public RawImage userAvatarImage;
+    public TextMeshProUGUI userInfoText;
+    public RawImage userAvatarImage;
 
     // Use this for initialization
     void Start()
     {
-        //GameObject userInfoTextObject = GameObject.Find("Canvas/UserInfoText");
-        //if (userInfoTextObject != null)
-        //{
+        GameObject userInfoTextObject = GameObject.Find("Canvas/UserInfoText");
+        if (userInfoTextObject != null)
+        {
 
-        //    userInfoText = userInfoTextObject.GetComponent<TextMeshProUGUI>();
-        //    userInfoText.text = CasdoorLoginManage.userInfo;
+            userInfoText = userInfoTextObject.GetComponent<TextMeshProUGUI>();
+            userInfoText.text = CasdoorLoginManage.userInfo;
 
-        //}
-        //else
-        //{
-        //    Debug.LogError("UserInfoTextObject is null.");
-        //}
-        //if (userAvatarImage == null)
-        //{
-        //    userAvatarImage = GameObject.Find("Canvas/UserAvatarImage").GetComponent<RawImage>();
-        //}
-        //_ = StartCoroutine(LoadTextureFromUrl(url: CasdoorLoginManage.avatarUrl));
+        }
+        else
+        {
+            Debug.LogError("UserInfoTextObject is null.");
+        }
+        if (userAvatarImage == null)
+        {
+            userAvatarImage = GameObject.Find("Canvas/UserAvatarImage").GetComponent<RawImage>();
+        }
+        _ = StartCoroutine(LoadTextureFromUrl(url: CasdoorLoginManage.avatarUrl));
 
         currentLevel = PlayerPrefs.GetInt("currentLevel", 1);
         levelText.GetComponent<Text>().text = "Level: " + currentLevel;
@@ -62,35 +62,35 @@ public class GameManager : MonoBehaviour
 
     }
 
-    //public void OnExit()
-    //{
-    //    userInfoText.text = "";
-    //    userAvatarImage = null;
-    //    SceneManager.LoadScene("SampleScene");
+    public void OnExit()
+    {
+        userInfoText.text = "";
+        userAvatarImage = null;
+        SceneManager.LoadScene("SampleScene");
 
-    //}
+    }
 
-    //public IEnumerator LoadTextureFromUrl(string url)
-    //{
-    //    using WWW www = new WWW(url);
-    //    yield return www; // 等待图片加载完成
+    public IEnumerator LoadTextureFromUrl(string url)
+    {
+        using WWW www = new WWW(url);
+        yield return www; // 等待图片加载完成
 
-    //    if (string.IsNullOrEmpty(www.error))
-    //    {
-    //        if (userAvatarImage != null)
-    //        {
-    //            userAvatarImage.texture = www.texture; // 将图片设置为Raw Image的纹理
-    //        }
-    //        else
-    //        {
-    //            Debug.LogError("UserAvatarImage is null.");
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError($"Failed to load texture from URL: {www.error}");
-    //    }
-    //}
+        if (string.IsNullOrEmpty(www.error))
+        {
+            if (userAvatarImage != null)
+            {
+                userAvatarImage.texture = www.texture; // 将图片设置为Raw Image的纹理
+            }
+            else
+            {
+                Debug.LogError("UserAvatarImage is null.");
+            }
+        }
+        else
+        {
+            Debug.LogError($"Failed to load texture from URL: {www.error}");
+        }
+    }
 
     void FixedUpdate()
     {

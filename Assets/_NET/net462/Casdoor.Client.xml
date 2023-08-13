@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Casdoor.Client</name>
+    </assembly>
+    <members>
+        <member name="T:Casdoor.Client.CasdoorPermission">
+            <summary>
+                CasdoorPermission has the same definition as https://github.com/casdoor/casdoor/blob/master/object/permission.go#L24
+            </summary>
+        </member>
+        <member name="T:Casdoor.Client.CasdoorRole">
+            <summary>
+                CasdoorRole has the same definition as https://github.com/casdoor/casdoor/blob/master/object/role.go#L24
+            </summary>
+        </member>
+        <member name="T:Casdoor.Client.CasdoorUser">
+            <summary>
+                CasdoorUser has the same definition as https://github.com/casdoor/casdoor/blob/master/object/user.go#L24
+            </summary>
+        </member>
+        <member name="T:Casdoor.Client.CasdoorOptions">
+            <summary>
+                CasdoorOptions is the core configuration.
+                The first step to use this SDK is to config an instance of CasdoorOptions.
+            </summary>
+        </member>
+    </members>
+</doc>

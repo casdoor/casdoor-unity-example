@@ -59,7 +59,6 @@ public class GameManager : MonoBehaviour
         makingPillars();
         score = 0;
         gameOver = false;
-
     }
 
     public void OnExit()

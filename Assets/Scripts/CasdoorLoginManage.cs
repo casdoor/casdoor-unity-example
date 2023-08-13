@@ -178,23 +178,8 @@ public class CasdoorLoginManage : MonoBehaviour
             Debug.LogError("Failed to get the token.");
             return;
         }
-        else
-        {
-            //Debug.Log("Get tokens by username and password success.");
-            //Debug.Log($"token.AccessToken : {token.AccessToken}\n" +
-            //    $"token.RefreshToken : {token.RefreshToken}\n" +
-            //    $"token.IdentityToken : {token.IdentityToken}\n" +
-            //    $"token.Scope : {token.Scope}\n" +
-            //    $"token.ExpiresIn : {token.ExpiresIn}\n" + 
-            //    $"token.TokenType : {token.TokenType}\n");
-        }
 
         user = client.ParseJwtToken(token.AccessToken, true);
-        //Debug.Log($"user.Name : {user.Name}\n" +
-        //    $"user.Owner : {user.Owner}\n" +
-        //    $"user.CreatedTime : {user.CreatedTime}\n" +
-        //    $"user.Id : {user.Id}\n"
-        //    );
 
         GameObject userInfoTextObject = GameObject.Find("Canvas/Panel/BackGroundImage/UserInfoText");
         if (userInfoTextObject != null)

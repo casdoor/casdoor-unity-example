@@ -73,13 +73,13 @@ public class GameManager : MonoBehaviour
     public IEnumerator LoadTextureFromUrl(string url)
     {
         using WWW www = new WWW(url);
-        yield return www; // 等待图片加载完成
+        yield return www; // Wait for the image to load
 
         if (string.IsNullOrEmpty(www.error))
         {
             if (userAvatarImage != null)
             {
-                userAvatarImage.texture = www.texture; // 将图片设置为Raw Image的纹理
+                userAvatarImage.texture = www.texture; // Set the picture as the texture of Raw Image
             }
             else
             {

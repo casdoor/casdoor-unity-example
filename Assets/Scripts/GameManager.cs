@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
     {
         userInfoText.text = "";
         userAvatarImage = null;
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Login");
 
     }
 

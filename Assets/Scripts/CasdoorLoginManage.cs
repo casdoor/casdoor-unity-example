@@ -74,12 +74,12 @@ public class CasdoorLoginManage : MonoBehaviour
         // If you want look PII in logs or exception, you can set the following
         IdentityModelEventSource.ShowPII = true;
 
-        if(userAvatarImage == null)
+        if (userAvatarImage == null)
         {
             userAvatarImage = GameObject.Find("Canvas/Panel/BackGroundImage/UserAvatarImage").GetComponent<RawImage>();
         }
 
-        if(inputPanel == null)
+        if (inputPanel == null)
         {
             inputPanel = GameObject.Find("Canvas/Panel/BackGroundImage/InputPanel");
         }
@@ -131,6 +131,7 @@ public class CasdoorLoginManage : MonoBehaviour
                 Debug.Log(string.Format("CallOnLoaded[{0}]", msg));
                 callbackUrl = msg;
                 code = System.Web.HttpUtility.ParseQueryString(new Uri(callbackUrl).Query).Get("code");
+
 
                 // Inject JavaScript code to apply CSS scaling
                 webViewObject.EvaluateJS(@"
@@ -198,7 +199,7 @@ public class CasdoorLoginManage : MonoBehaviour
 #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
         webViewObject.bitmapRefreshCycle = 1;
 #endif
-        
+
         webViewObject.SetMargins(5, 5, 5, 5);
 
 #if !UNITY_WEBPLAYER
@@ -302,11 +303,11 @@ public class CasdoorLoginManage : MonoBehaviour
 
         if (!string.IsNullOrEmpty(callbackUrl))
         {
-            while (string.IsNullOrEmpty(code))
+            while (string.IsNullOrEmpty(code) || code.Length != 20 )
             {
                 await Task.Delay(10);  // If code is empty, continue checking after a short delay
             }
-            if (!string.IsNullOrEmpty(code))
+            if (!string.IsNullOrEmpty(code) && code.Length == 20)
             {
                 webViewObject.SetVisibility(false);
 
@@ -364,7 +365,7 @@ public class CasdoorLoginManage : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public static IEnumerator LoadTextureFromUrl(string url)
@@ -405,7 +406,7 @@ public class CasdoorLoginManage : MonoBehaviour
         }
 
         Authentic(token);
-        
+
     }
 
     private IEnumerator LoadMainSceneWithDelay()

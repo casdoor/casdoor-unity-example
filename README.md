@@ -16,11 +16,17 @@ The game in this example is based on [ValleyOfCubes_Unity3D](https://github.com/
 
 ## After running, you will see the following  interfaces:
 
+### Login with username and password
+
 |                           **iOS**                           |                         **Android**                          |
 | :---------------------------------------------------------: | :----------------------------------------------------------: |
 | <img src="./iOS-gif.gif" alt="iOS-gif" style="zoom:30%;" /> | <img src="./Android-gif.gif" alt="Android-gif" style="zoom: 30%;" /> |
 
+### Login with the casdoor web page
 
+|                           **iOS**                            |                         **Android**                          |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <img src="./iOS-gif-web.gif" alt="iOS-gif" style="zoom:30%;" /> | <img src="./Android-gif-web.gif" alt="Android-gif" style="zoom: 30%;" /> |
 
 ## Configure
 

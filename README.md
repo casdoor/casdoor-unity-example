@@ -1,57 +1,66 @@
-# casdoor-unity-example
+# Casdoor Unity Example
 
-The example uses the [Casdoor demo site](https://door.casdoor.com/) server and [`Casdoor.Client`](https://github.com/casdoor/casdoor-dotnet-sdk/tree/master/src/Casdoor.Client) SDK for `.NET` in [casdoor-dotnet-sdk](https://github.com/casdoor/casdoor-dotnet-sdk/). 
+[![License](https://img.shields.io/github/license/casdoor/casdoor-unity-example)](https://github.com/casdoor/casdoor-unity-example/blob/master/LICENSE)
+[![Discord](https://img.shields.io/discord/1022748306096537660?logo=discord&label=discord&color=5865F2)](https://discord.gg/5rPsrAzK7S)
 
-The game in this example is based on [ValleyOfCubes_Unity3D](https://github.com/oussamabonnor1/ValleyOfCubes_Unity3D).
+An example [Unity](https://unity.com/) game that signs players in with [Casdoor](https://casdoor.ai/) before starting, using `Casdoor.Client` of [casdoor-dotnet-sdk](https://github.com/casdoor-net/casdoor-dotnet-sdk). The game is based on [ValleyOfCubes_Unity3D](https://github.com/oussamabonnor1/ValleyOfCubes_Unity3D).
 
-## Quick Start
+| Sign in with | iOS | Android |
+|--------------|:---:|:-------:|
+| Username and password | <img src="./iOS-gif.gif" alt="iOS" height="400"/> | <img src="./Android-gif.gif" alt="Android" height="400"/> |
+| The Casdoor sign-in page | <img src="./iOS-gif-web.gif" alt="iOS" height="400"/> | <img src="./Android-gif-web.gif" alt="Android" height="400"/> |
 
-- download the code
+## How it works
 
-```bash
- git clone git@github.com:casdoor/casdoor-unity-example.git
-```
+All of the sign-in is in [Assets/Scripts/CasdoorLoginManage.cs](Assets/Scripts/CasdoorLoginManage.cs):
 
-- Open the newly downloaded code in `Unity Hub` and run it.
+- **Username and password**: `client.RequestPasswordTokenAsync(account, password)` gets the tokens with the OAuth 2.0 password grant (the application needs the **Password** grant type in Casdoor).
+- **Casdoor sign-in page**: the page is shown in a web view ([unity-webview](https://github.com/gree/unity-webview)). After signing in, Casdoor redirects to `http://localhost:5000/callback?code=...`; the script reads the code from the web view and exchanges it with `client.RequestAuthorizationCodeTokenAsync()`.
+- Either way, `client.ParseJwtToken()` verifies the access token with the keys of Casdoor and returns the user, whose name and avatar are shown before the `Main` scene of the game is loaded.
 
-## After running, you will see the following  interfaces:
+`Casdoor.Client` and its dependencies are in [Assets/_NET/net462](Assets/_NET/net462) as plain DLLs, because Unity doesn't use NuGet.
 
-### Login with username and password
+## Prerequisites
 
-|                           **iOS**                           |                         **Android**                          |
-| :---------------------------------------------------------: | :----------------------------------------------------------: |
-| <img src="./iOS-gif.gif" alt="iOS-gif" style="zoom:30%;" /> | <img src="./Android-gif.gif" alt="Android-gif" style="zoom: 30%;" /> |
+- [Unity](https://unity.com/download) 2022.3 (LTS), with the iOS or Android build support for building to a phone
+- A Casdoor server. The example is preconfigured for the public demo server https://door.casdoor.com, so it runs as is. To use your own, see [Casdoor installation](https://casdoor.ai/docs/basic/server-installation).
 
-### Login with the casdoor web page
+## Configuration
 
-|                           **iOS**                            |                         **Android**                          |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
-| <img src="./iOS-gif-web.gif" alt="iOS-gif" style="zoom:30%;" /> | <img src="./Android-gif-web.gif" alt="Android-gif" style="zoom: 30%;" /> |
+Skip this section to try the example with the public demo server.
 
-## Configure
+In your Casdoor, create (or reuse) an organization and an application, enable the **Password** grant type if you use the username and password sign-in, and add `http://localhost:5000/callback` to the application's **Redirect URLs**. Then fill in the `CasdoorOptions` at the top of `Start()` in [CasdoorLoginManage.cs](Assets/Scripts/CasdoorLoginManage.cs):
 
-Initialization requires 6 parameters, which are all str type:
-| Name (in order)  | Must | Description                                            |
-| ---------------- | ---- | ------------------------------------------------------ |
-| Endpoint         | Yes  | Casdoor Server Url, such as `https://door.casdoor.com` |
-| OrganizationName | Yes  | Organization name                                      |
-| ApplicationName  | Yes  | Application name                                       |
-| ApplicationType  | Yes  | webapp, webapi or native                               |
-| ClientId         | Yes  | Your client id                                         |
-| ClientSecret     | Yes  | Your client secret                                     |
-
-```C#
-var httpClient = new HttpClient();
-var client = new CasdoorClient(HttpClient, new CasdoorOptions{
-    Endpoint = "https://door.casdoor.com",
-    OrganizationName = "build-in",
-    ApplicationName = "app-build-in",
+```csharp
+var options = new CasdoorOptions
+{
+    Endpoint = "https://door.casdoor.com", // Casdoor server URL
+    OrganizationName = "casbin", // organization of the application
+    ApplicationName = "app-example", // name of the application
     ApplicationType = "native", // webapp, webapi or native
-    ClientId = "<your client id>",
-    ClientSecret = "<your client secret>",
-});
+    ClientId = "b800a86702dd4d29ec4d", // client ID of the application
+    ClientSecret = "1219843a8db4695155699be3a67f10796f2ec1d5", // client secret of the application
+    CallbackPath = "/callback",
+    RequireHttpsMetadata = true,
+    Scope = "openid profile email"
+};
 ```
+
+A game shipped to players can't keep a client secret: anyone can extract it from the build. For a real game, prefer the sign-in page with the authorization code flow and PKCE (no client secret), as in [casdoor-dotnet-desktop-example](https://github.com/casdoor-net/casdoor-dotnet-desktop-example).
+
+## Run
+
+```shell
+git clone https://github.com/casdoor/casdoor-unity-example
+```
+
+Open the folder in Unity Hub, open the login scene and press **Play**, or build it to iOS or Android. On the demo server, sign in with username `admin` and password `123`.
+
+## Resources
+
+- [Casdoor documentation](https://casdoor.ai/docs/overview)
+- [casdoor-dotnet-sdk](https://github.com/casdoor-net/casdoor-dotnet-sdk)
 
 ## License
 
-This project is licensed under the [Apache 2.0 license](https://github.com/casdoor/casdoor-dotnet-sdk/blob/master/LICENSE).
+[Apache-2.0](LICENSE)
